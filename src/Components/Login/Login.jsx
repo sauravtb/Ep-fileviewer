@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ParentDiv,
   LoginDiv,
@@ -12,6 +12,10 @@ import {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const inputFocus = useRef();
+  useEffect(() => {
+    inputFocus.current.focus();
+  }, []);
 
   return (
     <ParentDiv>
@@ -24,6 +28,7 @@ function Login() {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            ref={inputFocus}
           ></Input>
         </InputDiv>
         <InputDiv>
