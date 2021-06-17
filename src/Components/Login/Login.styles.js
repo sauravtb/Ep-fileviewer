@@ -47,7 +47,15 @@ export const Input = styled.input`
 
 export const InputDiv = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
+
+  & span {
+    color: red;
+    position: absolute;
+    bottom: 0px;
+    left: 1.6rem;
+  }
 `;
 
 export const MailIcon = styled(FiMail)`

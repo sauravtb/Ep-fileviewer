@@ -12,10 +12,16 @@ import {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const inputFocus = useRef();
   useEffect(() => {
     inputFocus.current.focus();
   }, []);
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+  };
 
   return (
     <ParentDiv>
@@ -30,6 +36,7 @@ function Login() {
             value={email}
             ref={inputFocus}
           ></Input>
+          {submitted && !email && <span>Please Enter a vaild mail</span>}
         </InputDiv>
         <InputDiv>
           <PassIcon />
@@ -39,8 +46,9 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             password={password}
           ></Input>
+          {submitted && !password && <span>Please Enter a vaild password</span>}
         </InputDiv>
-        <ButtonDiv>LOGIN</ButtonDiv>
+        <ButtonDiv onClick={handleSubmit}>LOGIN</ButtonDiv>
       </LoginDiv>
     </ParentDiv>
   );
