@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { ParentDiv, LoginDiv, ButtonDiv } from "./Login.styles.js";
 
 function Login() {
-  const [email, setEmail] = useState("Saurav");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <ParentDiv>
       <LoginDiv>
+        <p>LOGIN</p>
         <input
           type="email"
           placeholder="Email"
