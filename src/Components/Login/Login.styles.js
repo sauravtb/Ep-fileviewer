@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { FiMail } from "react-icons/fi";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 export const ParentDiv = styled.div`
   height: 100vh;
@@ -17,26 +19,44 @@ export const LoginDiv = styled.div`
   height: 60vh;
   background-color: white;
   border-radius: 5px;
-  position: relative;
 
   & p {
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 56px;
   }
+`;
 
-  & input {
-    height: 60px;
-    width: 400px;
-    font-size: 1.4rem;
-    margin: 1.2rem;
-    padding-left: 16px;
-    border-radius: 5px;
-    background-color: #e6e6e6;
-    border: none;
-    outline: none;
-    position: relative;
-  }
+export const Input = styled.input`
+  height: 60px;
+  width: 350px;
+  font-size: 1.4rem;
+  margin: 1.2rem;
+  padding-left: 56px;
+  border-radius: 5px;
+  background-color: #e6e6e6;
+  border: none;
+  outline: none;
+`;
+
+export const InputDiv = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+export const MailIcon = styled(FiMail)`
+  position: absolute;
+  left: 35px;
+  bottom: 39px;
+  color: #0007;
+  font-size: 1.5rem;
+`;
+export const PassIcon = styled(RiLockPasswordLine)`
+  position: absolute;
+  left: 35px;
+  bottom: 39px;
+  color: #0007;
+  font-size: 1.5rem;
 `;
 
 export const ButtonDiv = styled.button`
@@ -46,7 +66,7 @@ export const ButtonDiv = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   background-color: #4c569c;
   color: #fff;
   margin-top: 56px;
