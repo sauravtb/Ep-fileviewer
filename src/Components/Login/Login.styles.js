@@ -86,11 +86,9 @@ export const ButtonDiv = styled.button`
   margin-top: 4rem;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px;
-  opacity: 0.9;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
   :hover {
-    box-shadow: 0px 2px #4a569d;
-    width: 420px;
-    opacity: 1;
+    box-shadow: ${(props) => (props.disabled ? "0px" : "5px 5px #4a569d")};
   }
 `;
