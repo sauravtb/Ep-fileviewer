@@ -2,15 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Login, Nomatch } from "./Components";
 import { InboundFiles, OutboundFiles } from "./Components";
-import Table from "./Components/Table/Table.jsx";
+import Tablee from "./Components/Table/Table.jsx";
 
 function App() {
   return (
     <>
-      {/*<Table />
-      Table component is incomplete as of now, will configure properly once I
-      get the response from API. For now have just added basic table format
-      and dummy data*/}
       <Router>
         <Switch>
           <Route exact path="/inbound" component={InboundFiles} />

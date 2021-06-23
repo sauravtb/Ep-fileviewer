@@ -1,104 +1,101 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useTable, usePagination } from "react-table";
+import styled from "styled-components";
+import Button from "react-bootstrap/Button";
+import MOCK_DATA from "../MOCK_DATA.json";
+import { COLUMNS } from "./columns.js";
+import Table from "react-bootstrap/Table";
 
-import { useTable } from "react-table";
+function FilesTable() {
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => MOCK_DATA, []);
 
-function Table() {
-  const columnNames = [
-    "InboundFileKey",
-    "UsKey",
-    "UsCommonCode",
-    "ThemKey",
-    "ThemCommonCode",
-    "Filename",
-    "Plaintext",
-    "ReceivedAt",
-    "TransactionId",
-    "Processed",
-    "InboundFileId",
-  ];
+  useTable({
+    columns,
+    data,
+  });
 
-  const rowValues = [["ONE123"], ["TWO223"]];
+  const {
+    getTableProps,
+    getTableBodyProps,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    headerGroups,
+    prepareRow,
+  } = useTable({ columns, data }, usePagination);
 
-  const data = React.useMemo(
-    () =>
-      rowValues.map((item) => {
-        return {
-          0: item,
-          1: item,
-          2: item,
-          3: item,
-          4: item,
-          5: item,
-          6: item,
-          7: item,
-          8: item,
-          9: item,
-          10: item,
-        };
-      }),
-    []
-  );
-
-  const columns = React.useMemo(
-    () =>
-      columnNames.map((item, index) => {
-        return {
-          Header: item,
-          accessor: index.toString(),
-        };
-      }),
-    []
-  );
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
-
+  const { pageIndex } = state;
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: "solid 3px red",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
-                }}
-              >
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
-                    }}
-                  >
-                    {cell.render("Cell")}
-                  </td>
-                );
-              })}
+    <React.Fragment>
+      <Table
+        striped
+        bordered
+        hover
+        variant="dark"
+        responsive
+        {...getTableProps()}
+      >
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <BtnWrapper>
+        <Button
+          variant="dark"
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="dark"
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+        >
+          Next
+        </Button>
+      </BtnWrapper>
+      <span>
+        Page{" "}
+        <strong>
+          {pageIndex + 1} of {pageOptions.length}
+        </strong>{" "}
+      </span>
+    </React.Fragment>
   );
 }
 
-export default Table;
+export default FilesTable;
+
+const BtnWrapper = styled.div`
+  display: flex;
+
+  .btn {
+    margin: 0 1rem;
+  }
+`;
