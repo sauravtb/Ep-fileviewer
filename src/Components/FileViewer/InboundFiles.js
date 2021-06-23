@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaArrowDown } from "react-icons/fa";
 import Navbar from "../Shared/Navbar/Navbar.js";
-import FilesTable from "../Table/Table.jsx";
+import FilesTable from "../Table/Table.js";
 
-function OutboundFiles() {
+function InboundFiles() {
   const [spin, setSpin] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function OutboundFiles() {
       <Navbar />
       <Wrapper>
         <WrapDiv>
-          Outbound<DownIcon spin={spin}></DownIcon>
+          Inbound<UpIcon spin={spin}></UpIcon>
         </WrapDiv>
         <FilesTable />
       </Wrapper>
@@ -23,14 +23,12 @@ function OutboundFiles() {
   );
 }
 
-export default OutboundFiles;
+export default InboundFiles;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 2rem;
-  margin-right: 2rem;
-  margin-left: 2rem;
+  padding: 2rem 2rem 0 2rem;
   align-items: center;
   justify-content: center;
 `;
@@ -44,11 +42,11 @@ const WrapDiv = styled.div`
   margin-bottom: 3rem;
 `;
 
-const DownIcon = styled(FaArrowDown)`
+const UpIcon = styled(FaArrowDown)`
   font-size: 2.2rem;
-  color: red;
+  color: #4a569d;
   margin-left: 0.8rem;
   margin-top: 0.5rem;
   transition: all 0.8s ease;
-  transform: ${(props) => (props.spin ? "rotateZ(-180deg)" : "rotateZ(0deg)")};
+  transform: ${(props) => (props.spin ? "rotateZ(0deg)" : "rotateZ(-180deg)")};
 `;

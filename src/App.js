@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Login, Nomatch } from "./Components";
 import { InboundFiles, OutboundFiles } from "./Components";
-import Tablee from "./Components/Table/Table.jsx";
+import Tablee from "./Components/Table/Table.js";
 
 function App() {
   return (

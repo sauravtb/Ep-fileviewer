@@ -25,6 +25,7 @@ function FilesTable() {
     canPreviousPage,
     pageOptions,
     state,
+
     headerGroups,
     prepareRow,
   } = useTable({ columns, data }, usePagination);
