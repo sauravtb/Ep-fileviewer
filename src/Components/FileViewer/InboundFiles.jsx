@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Wrapper, WrapDiv, UpIcon } from "./Files.styles.js";
-import Header from "../Header/Header.jsx";
+import Header from "../Shared/Header/Header.jsx";
 
 function InboundFiles() {
   const [spin, setSpin] = useState(false);
