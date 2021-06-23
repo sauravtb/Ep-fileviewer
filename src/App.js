@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Login, Nomatch } from "./Components";
-import { InboundFiles, OutboundFiles } from "./Components";
-import Table from "./Components/Table/Table.jsx";
+import { Login, Nomatch } from "./components";
+import { InboundFiles, OutboundFiles } from "./components";
+import Table from "./components/Table/Table";
 
 function App() {
   return (
