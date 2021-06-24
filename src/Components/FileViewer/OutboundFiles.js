@@ -5,10 +5,10 @@ import Navbar from "../Shared/Navbar/Navbar.js";
 import FilesTable from "../Table/Table.js";
 
 function OutboundFiles() {
-  const [spin, setSpin] = useState(false);
+  const [spin, setSpin] = useState("false");
 
   useEffect(() => {
-    setSpin(true);
+    setSpin("true");
   }, []);
   return (
     <React.Fragment>
@@ -50,5 +50,6 @@ const DownIcon = styled(FaArrowDown)`
   margin-left: 0.8rem;
   margin-top: 0.5rem;
   transition: all 0.8s ease;
-  transform: ${(props) => (props.spin ? "rotateZ(-180deg)" : "rotateZ(0deg)")};
+  transform: ${(props) =>
+    props.spin === "true" ? "rotateZ(-180deg)" : "rotateZ(0deg)"};
 `;
