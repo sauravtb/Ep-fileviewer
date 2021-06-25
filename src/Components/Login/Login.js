@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import styled from "styled-components";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { userLogin } from "../Services/authService";
 
 function LoginNew() {
   const [email, setEmail] = useState("");
@@ -21,25 +22,11 @@ function LoginNew() {
 
     if (email.match(mailformat)) {
       setEmailError("");
-      userLogin();
+      Login();
     } else setEmailError(emailErrorMessage);
   }
-  const userLogin = async () => {
-    let userDetails = { email, password };
-    console.log(JSON.stringify(userDetails));
-    let result = await fetch("http://localhost:8000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": " ",
-        Host: " ",
-      },
-
-      body: JSON.stringify(userDetails),
-    });
-    result = await result.json();
-    if (result.takoen) history.push("/inbound");
-    console.log(result);
+  const Login = () => {
+    userLogin(email, password);
   };
 
   const handleSubmit = () => {
