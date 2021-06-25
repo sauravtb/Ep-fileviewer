@@ -10,40 +10,40 @@ function LoginNew() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [disable] = useState(false);
   const inputFocus = useRef();
   let history = useHistory();
 
-  function ValidateEmailAndPassword() {
+  function ValidateEmail() {
     const emailErrorMessage = "Invalid E-mail address";
-    const passwordErrorMessage = "Invalid Password";
     const mailformat =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    const passwordformat =
-      /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{13,25}$/;
-
-    if (email.match(mailformat) && password.match(passwordformat)) {
+    if (email.match(mailformat)) {
       setEmailError("");
-      setPasswordError("");
-      history.push("/inbound");
-    } else {
-      if (!email.match(mailformat) && !password.match(passwordformat)) {
-        setEmailError(emailErrorMessage);
-        setPasswordError(passwordErrorMessage);
-      } else if (!password.match(passwordformat)) {
-        setPasswordError(passwordErrorMessage);
-        setEmailError("");
-      } else if (!email.match(mailformat)) {
-        setEmailError(emailErrorMessage);
-        setPasswordError("");
-      }
-    }
+      userLogin();
+    } else setEmailError(emailErrorMessage);
   }
+  const userLogin = async () => {
+    let userDetails = { email, password };
+    console.log(JSON.stringify(userDetails));
+    let result = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": " ",
+        Host: " ",
+      },
+
+      body: JSON.stringify(userDetails),
+    });
+    result = await result.json();
+    if (result.takoen) history.push("/inbound");
+    console.log(result);
+  };
 
   const handleSubmit = () => {
-    ValidateEmailAndPassword();
+    ValidateEmail();
   };
 
   useEffect(() => {
@@ -72,7 +72,6 @@ function LoginNew() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Form.Text className="text-danger">{passwordError}</Form.Text>
           </Form.Group>
         </Form>
         <Button
@@ -95,5 +94,4 @@ const ParentDiv = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: ;
 `;
