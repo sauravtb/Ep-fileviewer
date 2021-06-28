@@ -1,7 +1,6 @@
-export const userLogin = async (email, password) => {
+export const UserLogin = async (email, password) => {
   try {
     const userDetails = { email, password };
-    console.log(userDetails);
     const url = "http://localhost:8000/login";
     const res = await fetch(url, {
       method: "POST",
@@ -12,7 +11,7 @@ export const userLogin = async (email, password) => {
     });
     if (res.ok) {
       const data = await res.json();
-      console.log(data);
+      return data;
     } else {
       console.log(res.status);
     }

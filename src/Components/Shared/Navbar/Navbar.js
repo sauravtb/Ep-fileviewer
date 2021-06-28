@@ -5,9 +5,13 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 function Header() {
+  const getName = sessionStorage.getItem("name");
   let history = useHistory();
   const handleLogout = () => {
     history.push("/");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("email");
   };
   const handleInbound = () => {
     history.push("/inbound");
@@ -18,7 +22,7 @@ function Header() {
   return (
     <ParentDiv>
       <Navbar expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand>Hello Saurav</Navbar.Brand>
+        <Navbar.Brand>Hello {getName}</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">

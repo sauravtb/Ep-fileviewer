@@ -5,9 +5,9 @@ import Button from "react-bootstrap/Button";
 import styled from "styled-components";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { userLogin } from "../Services/authService";
+import { UserLogin } from "../Services/authService";
 
-function LoginNew() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -25,8 +25,16 @@ function LoginNew() {
       Login();
     } else setEmailError(emailErrorMessage);
   }
-  const Login = () => {
-    userLogin(email, password);
+  const Login = async () => {
+    const data = await UserLogin(email, password);
+    if (data?.token) {
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("name", data.user.user_name);
+      sessionStorage.setItem("email", data.user.user_email);
+      history.push("/inbound");
+    } else {
+      alert("no user");
+    }
   };
 
   const handleSubmit = () => {
@@ -74,7 +82,7 @@ function LoginNew() {
   );
 }
 
-export default LoginNew;
+export default Login;
 
 const ParentDiv = styled.div`
   display: flex;
