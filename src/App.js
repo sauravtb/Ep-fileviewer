@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Login, Nomatch } from "./Components";
+import { Login, Nomatch, PrivateRoute } from "./Components";
 import { InboundFiles, OutboundFiles } from "./Components";
-import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
