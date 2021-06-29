@@ -48,7 +48,7 @@ export default InboundFiles;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
 `;
