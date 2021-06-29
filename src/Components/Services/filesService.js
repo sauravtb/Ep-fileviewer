@@ -1,13 +1,15 @@
-export const UserLogin = async (email, password) => {
+export const fetchFiles = async (fileUrl) => {
   try {
-    const userDetails = { email, password };
-    const url = "http://localhost:8000/login";
+    const url = `http://localhost:8000/api/${fileUrl}`;
+    const token = sessionStorage.getItem("token");
+    const id = sessionStorage.getItem("id");
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(userDetails),
+      body: JSON.stringify({ id }),
     });
     if (res.ok) {
       const data = await res.json();

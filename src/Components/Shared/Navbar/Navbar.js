@@ -12,6 +12,7 @@ function Header() {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("name");
     sessionStorage.removeItem("email");
+    sessionStorage.removeItem("id");
   };
   const handleInbound = () => {
     history.push("/inbound");

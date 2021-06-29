@@ -3,12 +3,25 @@ import styled from "styled-components";
 import { FaArrowDown } from "react-icons/fa";
 import Navbar from "../Shared/Navbar/Navbar.js";
 import FilesTable from "../Table/Table.js";
+import { fetchFiles } from "../Services/filesService";
+import Spinner from "react-bootstrap/Spinner";
+import { Columns } from "./OutboundColumn";
 
 function OutboundFiles() {
   const [spin, setSpin] = useState("false");
+  const [loader, setLoader] = useState(false);
+  const [rowData, setRowData] = useState([]);
 
+  const fetchOutboundFiles = async () => {
+    setLoader(true);
+    const fileUrl = "outboundfiles";
+    const data = await fetchFiles(fileUrl);
+    setRowData(data?.data);
+    setLoader(false);
+  };
   useEffect(() => {
     setSpin("true");
+    fetchOutboundFiles();
   }, []);
   return (
     <React.Fragment>
@@ -17,7 +30,11 @@ function OutboundFiles() {
         <WrapDiv>
           Outbound<DownIcon spin={spin}></DownIcon>
         </WrapDiv>
-        <FilesTable />
+        {loader ? (
+          <Spinner className="spinner" animation="border" variant="dark" />
+        ) : (
+          <FilesTable rowData={rowData} columnData={Columns}></FilesTable>
+        )}
       </Wrapper>
     </React.Fragment>
   );

@@ -1,14 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
-import MOCK_DATA from "../MOCK_DATA.json";
-import { COLUMNS } from "./columns.js";
 import Table from "react-bootstrap/Table";
 
-function FilesTable() {
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+function FilesTable({ rowData, columnData }) {
+  const columns = useMemo(() => columnData, [columnData]);
+  const data = useMemo(() => rowData, [rowData]);
 
   useTable({
     columns,
@@ -25,12 +23,16 @@ function FilesTable() {
     canPreviousPage,
     pageOptions,
     state,
-
     headerGroups,
+    setPageSize,
     prepareRow,
   } = useTable({ columns, data }, usePagination);
 
   const { pageIndex } = state;
+
+  useEffect(() => {
+    setPageSize(10);
+  }, [setPageSize]);
   return (
     <React.Fragment>
       <Table

@@ -3,12 +3,25 @@ import styled from "styled-components";
 import { FaArrowDown } from "react-icons/fa";
 import Navbar from "../Shared/Navbar/Navbar.js";
 import FilesTable from "../Table/Table.js";
+import { fetchFiles } from "../Services/filesService";
+import Spinner from "react-bootstrap/Spinner";
+import { Columns } from "./InboundColumn";
 
 function InboundFiles() {
   const [spin, setSpin] = useState("false");
+  const [loader, setLoader] = useState(false);
+  const [rowData, setRowData] = useState([]);
 
+  const fetchInboundFiles = async () => {
+    setLoader(true);
+    const fileUrl = "inboundfiles";
+    const data = await fetchFiles(fileUrl);
+    setRowData(data?.data);
+    setLoader(false);
+  };
   useEffect(() => {
     setSpin("true");
+    fetchInboundFiles();
   }, []);
   return (
     <React.Fragment>
@@ -17,7 +30,14 @@ function InboundFiles() {
         <WrapDiv>
           Inbound<UpIcon spin={spin}></UpIcon>
         </WrapDiv>
-        <FilesTable />
+        {loader ? (
+          <Spinner className="spinner" animation="border" variant="dark" />
+        ) : (
+          <FilesTable
+            rowData={rowData && rowData}
+            columnData={Columns}
+          ></FilesTable>
+        )}
       </Wrapper>
     </React.Fragment>
   );
@@ -28,7 +48,7 @@ export default InboundFiles;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 2rem 0 2rem;
+  padding: 2rem 2rem 1rem 2rem;
   align-items: center;
   justify-content: center;
 `;
