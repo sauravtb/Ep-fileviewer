@@ -54,19 +54,19 @@ const Wrapper = styled.div`
 `;
 const WrapDiv = styled.div`
   display: flex;
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: #343a40;
   flex-direction: row;
   align-items: center;
   margin-left: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const UpIcon = styled(FaArrowDown)`
-  font-size: 2.2rem;
+  font-size: 1.1rem;
   color: #4a569d;
   margin-left: 0.8rem;
-  margin-top: 0.5rem;
+  margin-top: 0.1rem;
   transition: all 0.8s ease;
   transform: ${(props) =>
     props.spin === "true" ? "rotateZ(0deg)" : "rotateZ(-180deg)"};

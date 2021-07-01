@@ -45,27 +45,25 @@ export default OutboundFiles;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 2rem;
-  margin-right: 2rem;
-  margin-left: 2rem;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
 `;
 const WrapDiv = styled.div`
   display: flex;
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: #343a40;
   flex-direction: row;
   align-items: center;
   margin-left: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const DownIcon = styled(FaArrowDown)`
-  font-size: 2.2rem;
+  font-size: 1.1rem;
   color: red;
   margin-left: 0.8rem;
-  margin-top: 0.5rem;
+  margin-top: 0.1rem;
   transition: all 0.8s ease;
   transform: ${(props) =>
     props.spin === "true" ? "rotateZ(-180deg)" : "rotateZ(0deg)"};

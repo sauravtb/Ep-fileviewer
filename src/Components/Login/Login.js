@@ -12,6 +12,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [invalidUserError, setInvalidUserError] = useState("");
   const [disable] = useState(false);
   const inputFocus = useRef();
   const [loader, setLoader] = useState(false);
@@ -39,12 +40,18 @@ function Login() {
       history.push("/inbound");
     } else {
       setLoader(false);
-      alert("no user");
+      setInvalidUserError("Invalid User");
     }
   };
 
   const handleSubmit = () => {
     ValidateEmail();
+  };
+
+  const handleKeypress = (e) => {
+    if (e.charCode === 13) {
+      handleSubmit();
+    }
   };
 
   useEffect(() => {
@@ -64,6 +71,7 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 ref={inputFocus}
+                onKeyPress={handleKeypress}
               ></Form.Control>
               <Form.Text className="text-danger">{emailError}</Form.Text>
             </Form.Group>
@@ -73,7 +81,9 @@ function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeypress}
               />
+              <Form.Text className="text-danger">{invalidUserError}</Form.Text>
             </Form.Group>
           </Form>
 

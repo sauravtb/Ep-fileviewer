@@ -5,7 +5,11 @@ export const Columns = [
   },
   {
     Header: "File name",
-    accessor: "filename",
+    accessor: "file_name",
+  },
+  {
+    Header: "Created At",
+    accessor: "created_at",
   },
   {
     Header: "Inactive",
@@ -23,29 +27,30 @@ export const Columns = [
     Header: "Posted",
     accessor: "posted",
   },
-  {
-    Header: "Created At",
-    accessor: "created_at",
-  },
+
   {
     Header: "ThemCommonCode",
     accessor: "them_common_code",
-  },
-  {
-    Header: "Receipt",
-    accessor: "receipt.String",
-  },
-
-  {
-    Header: "UsCommonCode",
-    accessor: "us_common_code",
   },
   {
     Header: "Them key",
     accessor: "them_key",
   },
   {
+    Header: "UsCommonCode",
+    accessor: "us_common_code",
+  },
+
+  {
     Header: "Us key",
     accessor: "us_key",
+  },
+  {
+    Header: "Debug",
+    accessor: "debug",
+  },
+  {
+    Header: "DoNotSend",
+    accessor: "do_not_send",
   },
 ];
