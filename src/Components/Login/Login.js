@@ -40,7 +40,7 @@ function Login() {
       history.push("/inbound");
     } else {
       setLoader(false);
-      setInvalidUserError("Invalid User");
+      setInvalidUserError("Invalid Credentials");
     }
   };
 
@@ -83,7 +83,9 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={handleKeypress}
               />
-              <Form.Text className="text-danger">{invalidUserError}</Form.Text>
+              <Form.Text className="text-danger text-center">
+                {invalidUserError}
+              </Form.Text>
             </Form.Group>
           </Form>
 
