@@ -27,14 +27,18 @@ export const Columns = [
     Header: "Posted",
     accessor: "posted",
   },
+  {
+    Header: "Them Name",
+    accessor: "ThemName",
+  },
 
   {
     Header: "Them Common Code",
     accessor: "them_common_code",
   },
   {
-    Header: "Them key",
-    accessor: "them_key",
+    Header: "Us Name",
+    accessor: "us_name",
   },
   {
     Header: "Us Common Code",

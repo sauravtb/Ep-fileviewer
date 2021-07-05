@@ -27,26 +27,24 @@ export const Columns = [
     Header: "Processed",
     accessor: "processed",
   },
-
+  {
+    Header: "Them Name",
+    accessor: "ThemName",
+  },
   {
     Header: "Them Common Code",
     accessor: "them_common_code",
-  },
-  {
-    Header: "Them key",
-    accessor: "them_key",
   },
   {
     Header: "Transaction Id",
     accessor: "transaction_id",
   },
   {
+    Header: "Us Name",
+    accessor: "us_name",
+  },
+  {
     Header: "Us Common Code",
     accessor: "us_common_code",
-  },
-
-  {
-    Header: "User key",
-    accessor: "user_key",
   },
 ];
