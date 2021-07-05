@@ -16,11 +16,11 @@ export const Columns = [
     accessor: "inactive",
   },
   {
-    Header: "InboundFileId",
+    Header: "Inbound File Id",
     accessor: "inbound_file_id",
   },
   {
-    Header: "NaesbUserKey",
+    Header: "Naesb User Key",
     accessor: "naesb_user_key",
   },
   {
@@ -29,7 +29,7 @@ export const Columns = [
   },
 
   {
-    Header: "ThemCommonCode",
+    Header: "Them Common Code",
     accessor: "them_common_code",
   },
   {
@@ -37,11 +37,11 @@ export const Columns = [
     accessor: "them_key",
   },
   {
-    Header: "TransactionId",
+    Header: "Transaction Id",
     accessor: "transaction_id",
   },
   {
-    Header: "UsCommonCode",
+    Header: "Us Common Code",
     accessor: "us_common_code",
   },
 

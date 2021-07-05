@@ -16,11 +16,11 @@ export const Columns = [
     accessor: "inactive",
   },
   {
-    Header: "OutboundFileId",
+    Header: "Outbound File Id",
     accessor: "outbound_file_id",
   },
   {
-    Header: "NaesbUserKey",
+    Header: "Naesb User Key",
     accessor: "naesb_user_key",
   },
   {
@@ -29,7 +29,7 @@ export const Columns = [
   },
 
   {
-    Header: "ThemCommonCode",
+    Header: "Them Common Code",
     accessor: "them_common_code",
   },
   {
@@ -37,20 +37,15 @@ export const Columns = [
     accessor: "them_key",
   },
   {
-    Header: "UsCommonCode",
+    Header: "Us Common Code",
     accessor: "us_common_code",
-  },
-
-  {
-    Header: "Us key",
-    accessor: "us_key",
   },
   {
     Header: "Debug",
     accessor: "debug",
   },
   {
-    Header: "DoNotSend",
+    Header: "Do Not Send",
     accessor: "do_not_send",
   },
 ];
