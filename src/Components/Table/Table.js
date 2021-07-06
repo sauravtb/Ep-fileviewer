@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo } from "react";
-import { useTable, usePagination } from "react-table";
+import React, { useMemo } from "react";
+import { useTable, usePagination, useFilters } from "react-table";
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
 function FilesTable({ rowData, columnData }) {
@@ -25,16 +24,15 @@ function FilesTable({ rowData, columnData }) {
     state,
     headerGroups,
     setPageSize,
+    gotoPage,
+    pageCount,
     prepareRow,
-  } = useTable({ columns, data }, usePagination);
+  } = useTable({ columns, data }, useFilters, usePagination);
 
-  const { pageIndex } = state;
+  const { pageIndex, pageSize } = state;
 
-  useEffect(() => {
-    setPageSize(10);
-  }, [setPageSize]);
   return (
-    <React.Fragment>
+    <MainDiv>
       <Table
         striped
         bordered
@@ -47,7 +45,11 @@ function FilesTable({ rowData, columnData }) {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps()}>
+                  {column.render("Header")}
+
+                  <div>{column.canFilter ? column.render("Filter") : null}</div>
+                </th>
               ))}
             </tr>
           ))}
@@ -67,38 +69,79 @@ function FilesTable({ rowData, columnData }) {
           })}
         </tbody>
       </Table>
-      <BtnWrapper>
-        <Button
-          variant="dark"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
         >
-          Previous
-        </Button>
-        <Button
-          variant="dark"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >
-          Next
-        </Button>
-      </BtnWrapper>
-      <span>
-        Page{" "}
-        <strong>
-          {pageIndex + 1} of {pageOptions.length}
-        </strong>{" "}
-      </span>
-    </React.Fragment>
+          {[5, 10, 20, 30, 40].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
+    </MainDiv>
   );
 }
 
 export default FilesTable;
 
-const BtnWrapper = styled.div`
-  display: flex;
+const MainDiv = styled.span`
+  width: 100%;
+  .pageInfo {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    color: #3e444a;
 
-  .btn {
-    margin: 0 1rem;
+    & button {
+      border-radius: 3px;
+      margin-right: 0.3rem;
+    }
+    & span {
+      margin-right: 0.3rem;
+    }
+    & input {
+      border-radius: 3px;
+    }
   }
 `;

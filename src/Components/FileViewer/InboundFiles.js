@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { FaArrowDown } from "react-icons/fa";
 import Navbar from "../Shared/Navbar/Navbar.js";
@@ -6,23 +7,26 @@ import FilesTable from "../Table/Table.js";
 import { fetchFiles } from "../Services/filesService";
 import Spinner from "react-bootstrap/Spinner";
 import { Columns } from "./InboundColumn";
+import { Logout } from "../Utils/Logout";
 
 function InboundFiles() {
+  const history = useHistory();
   const [spin, setSpin] = useState("false");
   const [loader, setLoader] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const fetchInboundFiles = async () => {
+  const fetchInboundFiles = useCallback(async () => {
     setLoader(true);
     const fileUrl = "inboundfiles";
     const data = await fetchFiles(fileUrl);
     setRowData(data?.data);
+    if (data === 401) Logout(history);
     setLoader(false);
-  };
+  }, [history]);
   useEffect(() => {
     setSpin("true");
     fetchInboundFiles();
-  }, []);
+  }, [fetchInboundFiles]);
   return (
     <React.Fragment>
       <Navbar />

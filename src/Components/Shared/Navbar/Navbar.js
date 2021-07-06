@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { Logout } from "../../Utils/Logout";
 
 function Header() {
   const getName = sessionStorage.getItem("name");
@@ -13,11 +14,7 @@ function Header() {
   const splitLocation = pathname.split("/");
 
   const handleLogout = () => {
-    history.push("/");
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("id");
+    Logout(history);
   };
 
   const handleInbound = () => {

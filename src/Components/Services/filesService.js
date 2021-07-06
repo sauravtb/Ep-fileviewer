@@ -1,9 +1,10 @@
-export const fetchFiles = async (fileUrl) => {
+export const fetchFiles = async (fileUrl, signal) => {
   try {
     const url = `http://localhost:8000/api/${fileUrl}`;
     const token = sessionStorage.getItem("token");
     const id = sessionStorage.getItem("id");
     const res = await fetch(url, {
+      // signal: signal,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,6 +17,7 @@ export const fetchFiles = async (fileUrl) => {
       return data;
     } else {
       console.log(res.status);
+      return res.status;
     }
   } catch (error) {
     console.log(error);
