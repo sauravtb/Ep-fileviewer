@@ -19,8 +19,11 @@ function InboundFiles() {
     setLoader(true);
     const fileUrl = "inboundfiles";
     const data = await fetchFiles(fileUrl);
-    setRowData(data?.data);
-    if (data === 401) Logout(history);
+    if (data && data === 401) {
+      Logout(history);
+    } else {
+      setRowData(data && data.data);
+    }
     setLoader(false);
   }, [history]);
   useEffect(() => {

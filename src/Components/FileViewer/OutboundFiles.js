@@ -19,8 +19,12 @@ function OutboundFiles() {
     setLoader(true);
     const fileUrl = "outboundfiles";
     const data = await fetchFiles(fileUrl);
-    setRowData(data?.data);
-    if (data === 401) Logout(history);
+    if (data && data === 401) {
+      Logout(history);
+    } else {
+      setRowData(data && data.data);
+    }
+
     setLoader(false);
   }, [history]);
   useEffect(() => {
@@ -37,7 +41,10 @@ function OutboundFiles() {
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
         ) : (
-          <FilesTable rowData={rowData} columnData={Columns}></FilesTable>
+          <FilesTable
+            rowData={rowData && rowData}
+            columnData={Columns}
+          ></FilesTable>
         )}
       </Wrapper>
     </React.Fragment>

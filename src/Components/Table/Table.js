@@ -4,8 +4,8 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 
 function FilesTable({ rowData, columnData }) {
-  const columns = useMemo(() => columnData, [columnData]);
-  const data = useMemo(() => rowData, [rowData]);
+  const columns = useMemo(() => columnData && columnData, [columnData]);
+  const data = useMemo(() => rowData && rowData, [rowData]);
 
   useTable({
     columns,
