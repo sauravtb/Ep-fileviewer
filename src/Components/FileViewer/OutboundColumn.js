@@ -3,12 +3,7 @@ import { ColumnFilter, DateFilter } from "../Table/ColumnFilter";
 
 export const Columns = [
   {
-    Header: "Us Name",
-    accessor: "us_name",
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Them Name",
+    Header: "Sent To",
     accessor: "ThemName",
     Filter: ColumnFilter,
   },
@@ -19,10 +14,10 @@ export const Columns = [
     Filter: ColumnFilter,
   },
   {
-    Header: "Created At",
+    Header: "Sent At",
     accessor: "created_at",
     Cell: ({ value }) => {
-      return format(new Date(value), "dd/MM/yyyy @ HH:mm a");
+      return format(new Date(value), "dd/MM/yyyy @ hh:mm a");
     },
     Filter: DateFilter,
   },

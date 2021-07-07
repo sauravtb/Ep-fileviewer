@@ -38,6 +38,9 @@ function Login() {
       sessionStorage.setItem("id", data.user.user_key);
       setLoader(false);
       history.push("/inbound");
+    } else if (data === 401) {
+      setLoader(false);
+      setInvalidUserError("Network Error");
     } else {
       setLoader(false);
       setInvalidUserError("Invalid Credentials");
@@ -73,7 +76,9 @@ function Login() {
                 ref={inputFocus}
                 onKeyPress={handleKeypress}
               ></Form.Control>
-              <Form.Text className="text-danger">{emailError}</Form.Text>
+              <Form.Text className="text-danger text-center">
+                {emailError}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
               <Form.Control

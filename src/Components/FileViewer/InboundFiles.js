@@ -7,7 +7,7 @@ import FilesTable from "../Table/Table.js";
 import { fetchFiles } from "../Services/filesService";
 import Spinner from "react-bootstrap/Spinner";
 import { Columns } from "./InboundColumn";
-import { Logout } from "../Utils/Logout";
+import { Logout } from "../../Utils/Logout";
 
 function InboundFiles() {
   const history = useHistory();
@@ -15,7 +15,7 @@ function InboundFiles() {
   const [loader, setLoader] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const fetchInboundFiles = async () => {
+  const fetchInboundFiles = useCallback(async () => {
     setLoader(true);
     const fileUrl = "inboundfiles";
     const data = await fetchFiles(fileUrl);
@@ -23,29 +23,34 @@ function InboundFiles() {
       console.log("data 401");
       Logout(history);
     } else {
-      console.log("data received");
       setRowData(data && data.data);
     }
     setLoader(false);
-  };
+  }, [history]);
+
   useEffect(() => {
     setSpin("true");
     fetchInboundFiles();
-  }, []);
+  }, [fetchInboundFiles]);
+
+  const usName = rowData && rowData[0]?.us_name.replace(/_/g, " ");
   return (
     <React.Fragment>
       <Navbar />
       <Wrapper>
-        <WrapDiv>
-          Inbound<UpIcon spin={spin}></UpIcon>
-        </WrapDiv>
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
         ) : (
-          <FilesTable
-            rowData={rowData && rowData}
-            columnData={Columns}
-          ></FilesTable>
+          <>
+            <WrapDiv>
+              Recieved from them to {usName}
+              <UpIcon spin={spin}></UpIcon>
+            </WrapDiv>
+            <FilesTable
+              rowData={rowData && rowData}
+              columnData={Columns}
+            ></FilesTable>
+          </>
         )}
       </Wrapper>
     </React.Fragment>

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { Logout } from "../../Utils/Logout";
+import { Logout } from "../../../Utils/Logout";
 
 function Header() {
   const getName = sessionStorage.getItem("name");
@@ -36,13 +36,13 @@ function Header() {
               className={splitLocation[1] === "inbound" ? "active" : ""}
               onClick={handleInbound}
             >
-              Inbound
+              Files Received
             </Nav.Link>
             <Nav.Link
               className={splitLocation[1] === "outbound" ? "active" : ""}
               onClick={handleOutbound}
             >
-              Outbound
+              Files Sent
             </Nav.Link>
           </Nav>
           <Nav>
