@@ -15,21 +15,23 @@ function InboundFiles() {
   const [loader, setLoader] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const fetchInboundFiles = useCallback(async () => {
+  const fetchInboundFiles = async () => {
     setLoader(true);
     const fileUrl = "inboundfiles";
     const data = await fetchFiles(fileUrl);
     if (data && data === 401) {
+      console.log("data 401");
       Logout(history);
     } else {
+      console.log("data received");
       setRowData(data && data.data);
     }
     setLoader(false);
-  }, [history]);
+  };
   useEffect(() => {
     setSpin("true");
     fetchInboundFiles();
-  }, [fetchInboundFiles]);
+  }, []);
   return (
     <React.Fragment>
       <Navbar />

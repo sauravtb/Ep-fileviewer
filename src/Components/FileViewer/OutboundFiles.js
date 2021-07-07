@@ -15,7 +15,7 @@ function OutboundFiles() {
   const [loader, setLoader] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const fetchOutboundFiles = useCallback(async () => {
+  const fetchOutboundFiles = async () => {
     setLoader(true);
     const fileUrl = "outboundfiles";
     const data = await fetchFiles(fileUrl);
@@ -26,11 +26,11 @@ function OutboundFiles() {
     }
 
     setLoader(false);
-  }, [history]);
+  };
   useEffect(() => {
     setSpin("true");
     fetchOutboundFiles();
-  }, [fetchOutboundFiles]);
+  }, []);
   return (
     <React.Fragment>
       <Navbar />
