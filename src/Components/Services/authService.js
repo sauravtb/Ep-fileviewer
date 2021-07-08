@@ -13,10 +13,10 @@ export const UserLogin = async (email, password) => {
       const data = await res.json();
       return data;
     } else {
-      console.log(res.status);
+      console.log(res.status, "status");
       return res.status;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error, "error");
   }
 };

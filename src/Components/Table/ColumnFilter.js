@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
 export const ColumnFilter = ({ column }) => {
   const { filterValue, setFilter } = column;
@@ -22,12 +23,16 @@ export const DateFilter = ({ column }) => {
   };
   return (
     <DateDiv>
-      <input
-        type="date"
-        value={filterValue || ""}
-        onChange={(e) => setFilter(e.target.value)}
-      />
-      <button onClick={handleReset}>Reset</button>
+      <WrapDiv>
+        <input
+          type="date"
+          value={filterValue || ""}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+        <Button size="sm" onClick={handleReset}>
+          Reset
+        </Button>
+      </WrapDiv>
     </DateDiv>
   );
 };
@@ -35,6 +40,7 @@ export const DateFilter = ({ column }) => {
 // Styling For CoulmnFilter
 const ColumnDiv = styled.div`
   & input {
+    margin-top: 0.3rem;
     width: 50%;
     border-radius: 2px;
     border: none;
@@ -45,14 +51,18 @@ const ColumnDiv = styled.div`
 // Styling For DateFilter
 export const DateDiv = styled.div`
   & input {
+    margin-top: 0.3rem;
     width: 50%;
     border-radius: 2px;
     border: none;
     background-color: #ffffff;
   }
   & button {
-    flex-direction: row;
-    border-radius: 4px;
+    margin-top: 0.3rem;
     margin-left: 0.2rem;
   }
+`;
+const WrapDiv = styled.div`
+  display: flex;
+  align-items: center;
 `;

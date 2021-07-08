@@ -41,15 +41,16 @@ function OutboundFiles() {
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
         ) : (
-          <>
+          <React.Fragment>
             <WrapDiv>
-              Sent from {usName} to them<DownIcon spin={spin}></DownIcon>
+              Sent from {usName}
+              <DownIcon spin={spin}></DownIcon>
             </WrapDiv>
             <FilesTable
               rowData={rowData && rowData}
               columnData={Columns}
             ></FilesTable>
-          </>
+          </React.Fragment>
         )}
       </Wrapper>
     </React.Fragment>
@@ -59,6 +60,8 @@ function OutboundFiles() {
 export default OutboundFiles;
 
 const Wrapper = styled.div`
+  font-family: "Noto Sans SC", sans-serif;
+
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -79,7 +82,7 @@ const DownIcon = styled(FaArrowDown)`
   font-size: 1.1rem;
   color: red;
   margin-left: 0.8rem;
-  margin-top: 0.1rem;
+  margin-top: 0.15rem;
   transition: all 0.8s ease;
   transform: ${(props) =>
     props.spin === "true" ? "rotateZ(-180deg)" : "rotateZ(0deg)"};

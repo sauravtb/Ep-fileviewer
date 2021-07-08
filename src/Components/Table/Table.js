@@ -2,6 +2,9 @@ import React, { useMemo } from "react";
 import { useTable, usePagination, useFilters } from "react-table";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function FilesTable({ rowData, columnData }) {
   const columns = useMemo(() => columnData && columnData, [columnData]);
@@ -34,10 +37,10 @@ function FilesTable({ rowData, columnData }) {
   return (
     <MainDiv>
       <Table
-        striped
+        // striped
         bordered
         hover
-        variant="dark"
+        // variant="dark"
         responsive
         {...getTableProps()}
       >
@@ -70,18 +73,6 @@ function FilesTable({ rowData, columnData }) {
         </tbody>
       </Table>
       <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
         <span>
           Page{" "}
           <strong>
@@ -100,18 +91,45 @@ function FilesTable({ rowData, columnData }) {
             style={{ width: "100px" }}
           />
         </span>{" "}
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
+        <Button
+          varian="primary"
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}
+          size="sm"
         >
+          {"<<"}
+        </Button>{" "}
+        <Button
+          size="sm"
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
+          {"<"}
+        </Button>{" "}
+        <Button size="sm" onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </Button>{" "}
+        <Button
+          size="sm"
+          onClick={() => gotoPage(pageCount - 1)}
+          disabled={!canNextPage}
+        >
+          {">>"}
+        </Button>{" "}
+        <DropdownButton title={`Show ${pageSize}`} value={pageSize} size="sm">
           {[5, 10, 20, 30, 40].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
+            <Dropdown.Item
+              as="button"
+              key={pageSize}
+              value={pageSize}
+              onClick={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+            >
               Show {pageSize}
-            </option>
+            </Dropdown.Item>
           ))}
-        </select>
+        </DropdownButton>
       </div>
     </MainDiv>
   );
@@ -121,6 +139,22 @@ export default FilesTable;
 
 const MainDiv = styled.span`
   width: 100%;
+  th {
+    font-family: "Work Sans", sans-serif;
+    font-size: 1.2rem;
+    text-align: left;
+    background-color: #343a40;
+    color: white;
+  }
+  tr {
+    font-size: 1.2rem;
+    font-family: "Uchen", serif;
+    background-color: #f7f6fb;
+  }
+  tr:nth-child(even) {
+    background-color: #dee4e9;
+  }
+
   .pageInfo {
     display: flex;
     width: 100%;

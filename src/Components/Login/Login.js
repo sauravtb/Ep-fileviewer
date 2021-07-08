@@ -38,9 +38,6 @@ function Login() {
       sessionStorage.setItem("id", data.user.user_key);
       setLoader(false);
       history.push("/inbound");
-    } else if (data === 401) {
-      setLoader(false);
-      setInvalidUserError("Network Error");
     } else {
       setLoader(false);
       setInvalidUserError("Invalid Credentials");
