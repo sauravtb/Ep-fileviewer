@@ -43,7 +43,7 @@ function InboundFiles() {
         ) : (
           <React.Fragment>
             <WrapDiv>
-              Recieved to {usName}
+              Recieved by {usName}
               <UpIcon spin={spin}></UpIcon>
             </WrapDiv>
             <FilesTable
