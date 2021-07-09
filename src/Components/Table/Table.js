@@ -140,15 +140,11 @@ export default FilesTable;
 const MainDiv = styled.span`
   width: 100%;
   th {
-    font-family: "Work Sans", sans-serif;
-    font-size: 1.2rem;
     text-align: left;
     background-color: #343a40;
     color: white;
   }
   tr {
-    font-size: 1.2rem;
-    font-family: "Uchen", serif;
     background-color: #f7f6fb;
   }
   tr:nth-child(even) {

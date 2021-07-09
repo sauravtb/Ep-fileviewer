@@ -60,21 +60,16 @@ export default Header;
 
 const ParentDiv = styled.div`
   .navbar-brand {
-    font-family: "Encode Sans SC", sans-serif;
-    font-size: 1.3rem;
     margin-right: 3rem;
     margin-top: -0.3rem;
   }
   .nav-link {
     color: white;
-    font-family: "Encode Sans SC", sans-serif;
-    font-size: 1.1rem;
     margin-right: 1.6rem;
     padding: 0.5rem 1rem;
     transition: all 0.2s ease;
   }
   .nav-link.text-danger {
-    font-family: "Encode Sans SC", sans-serif;
     border: 1px solid red;
     transition: all 0.2s ease;
   }

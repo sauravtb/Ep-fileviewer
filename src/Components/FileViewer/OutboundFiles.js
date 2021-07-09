@@ -60,8 +60,6 @@ function OutboundFiles() {
 export default OutboundFiles;
 
 const Wrapper = styled.div`
-  font-family: "Noto Sans SC", sans-serif;
-
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -70,7 +68,6 @@ const Wrapper = styled.div`
 `;
 const WrapDiv = styled.div`
   display: flex;
-  font-size: 1.5rem;
   color: #343a40;
   flex-direction: row;
   align-items: center;
@@ -79,7 +76,6 @@ const WrapDiv = styled.div`
 `;
 
 const DownIcon = styled(FaArrowDown)`
-  font-size: 1.1rem;
   color: red;
   margin-left: 0.8rem;
   margin-top: 0.15rem;
