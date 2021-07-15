@@ -17,7 +17,6 @@ export const ColumnFilter = ({ column }) => {
 
 export const DateFilter = ({ column }) => {
   const { filterValue, setFilter } = column;
-
   const handleReset = () => {
     setFilter("");
   };
@@ -52,7 +51,7 @@ const ColumnDiv = styled.div`
 export const DateDiv = styled.div`
   & input {
     margin-top: 0.3rem;
-    width: 50%;
+    width: 53%;
     border-radius: 2px;
     border: none;
     background-color: #ffffff;

@@ -3,11 +3,24 @@ import { ColumnFilter, DateFilter } from "../Table/ColumnFilter";
 
 export const Columns = [
   {
+    Header: () => null,
+    id: "expander",
+    Cell: ({ row }) => (
+      <span {...row.getToggleRowExpandedProps()}>
+        {row.isExpanded ? "👇" : "👉"}
+      </span>
+    ),
+  },
+  {
     Header: "Sent To",
     accessor: "ThemName",
     Filter: ColumnFilter,
   },
-
+  {
+    Header: "Sent By",
+    accessor: "us_name",
+    Filter: ColumnFilter,
+  },
   {
     Header: "File Name",
     accessor: "file_name",

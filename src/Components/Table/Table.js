@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useTable, usePagination, useFilters } from "react-table";
+import { useTable, usePagination, useFilters, useExpanded } from "react-table";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -29,21 +29,29 @@ function FilesTable({ rowData, columnData }) {
     setPageSize,
     gotoPage,
     pageCount,
+    visibleColumns,
     prepareRow,
-  } = useTable({ columns, data }, useFilters, usePagination);
+  } = useTable({ columns, data }, useExpanded, useFilters, usePagination);
 
   const { pageIndex, pageSize } = state;
 
+  const renderRowSubComponent = React.useCallback(
+    ({ row }) => (
+      <div
+        style={{
+          fontSize: "1rem",
+          maxWidth: "90vw",
+        }}
+      >
+        <p style={{ wordWrap: "break-word" }}>{row.original.file_plain_text}</p>
+      </div>
+    ),
+    []
+  );
+
   return (
     <MainDiv>
-      <Table
-        // striped
-        bordered
-        hover
-        // variant="dark"
-        responsive
-        {...getTableProps()}
-      >
+      <Table bordered hover responsive {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -61,13 +69,22 @@ function FilesTable({ rowData, columnData }) {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
+              <React.Fragment>
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      {renderRowSubComponent({ row })}
+                    </td>
+                  </tr>
+                ) : null}
+              </React.Fragment>
             );
           })}
         </tbody>
@@ -92,7 +109,7 @@ function FilesTable({ rowData, columnData }) {
           />
         </span>{" "}
         <Button
-          varian="primary"
+          variant="primary"
           onClick={() => gotoPage(0)}
           disabled={!canPreviousPage}
           size="sm"
@@ -146,6 +163,7 @@ const MainDiv = styled.span`
   }
   tr {
     background-color: #f7f6fb;
+    cursor: pointer;
   }
   tr:nth-child(even) {
     background-color: #dee4e9;
