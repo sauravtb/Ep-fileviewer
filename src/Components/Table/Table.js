@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   useTable,
   usePagination,
@@ -15,6 +15,11 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { GlobalFilter } from "./GlobalFilter";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import {
+  TiArrowUnsorted,
+  TiArrowSortedUp,
+  TiArrowSortedDown,
+} from "react-icons/ti";
 
 function FilesTable({ rowData, columnData }) {
   const columns = useMemo(() => columnData && columnData, [columnData]);
@@ -67,11 +72,6 @@ function FilesTable({ rowData, columnData }) {
       </div>
     );
   }, []);
-  const renderToolkitColumn = () => {
-    <Tooltip className="tooltip" id="button-tooltip">
-      Hello hbdhfjgbhfbhjb
-    </Tooltip>;
-  };
   const renderToolkit = React.useCallback(({ row }) => {
     const data = row && row.original.file_plain_text;
     return (
@@ -104,12 +104,16 @@ function FilesTable({ rowData, columnData }) {
                 return (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                    <span className="sorting">
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <TiArrowSortedDown />
+                        ) : (
+                          <TiArrowSortedUp />
+                        )
+                      ) : (
+                        <TiArrowUnsorted />
+                      )}
                     </span>
                     <div>
                       {column.canFilter ? column.render("Filter") : null}
@@ -222,9 +226,6 @@ export default FilesTable;
 
 const MainDiv = styled.span`
   width: 100%;
-  .tooltip {
-    width: 800px;
-  }
   th {
     text-align: left;
     background-color: #343a40;
