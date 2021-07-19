@@ -3,15 +3,6 @@ import { ColumnFilter, DateFilter } from "../Table/ColumnFilter";
 
 export const Columns = [
   {
-    Header: () => null,
-    id: "expander",
-    Cell: ({ row }) => (
-      <span {...row.getToggleRowExpandedProps()}>
-        {row.isExpanded ? "👇" : "👉"}
-      </span>
-    ),
-  },
-  {
     Header: "Received From",
     accessor: "ThemName",
     Filter: ColumnFilter,
@@ -25,6 +16,7 @@ export const Columns = [
     Header: "File Name",
     accessor: "file_name",
     Filter: ColumnFilter,
+    tooltip: true,
   },
   {
     Header: "Received At",

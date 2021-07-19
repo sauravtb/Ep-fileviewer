@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useTable,
   usePagination,
@@ -12,8 +12,9 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import Collapse from "react-bootstrap/Collapse";
 import { GlobalFilter } from "./GlobalFilter";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function FilesTable({ rowData, columnData }) {
   const columns = useMemo(() => columnData && columnData, [columnData]);
@@ -53,19 +54,44 @@ function FilesTable({ rowData, columnData }) {
 
   const { pageIndex, pageSize, globalFilter } = state;
 
-  const renderRowSubComponent = React.useCallback(
-    ({ row }) => (
+  const renderRowSubComponents = React.useCallback(({ row }) => {
+    const data = row && row.original.file_plain_text;
+    return (
       <div
         style={{
           fontSize: "1rem",
           maxWidth: "90vw",
         }}
       >
-        <p style={{ wordWrap: "break-word" }}>{row.original.file_plain_text}</p>
+        <p style={{ wordWrap: "break-word" }}>{data}</p>
       </div>
-    ),
-    []
-  );
+    );
+  }, []);
+  const renderToolkitColumn = () => {
+    <Tooltip className="tooltip" id="button-tooltip">
+      Hello hbdhfjgbhfbhjb
+    </Tooltip>;
+  };
+  const renderToolkit = React.useCallback(({ row }) => {
+    const data = row && row.original.file_plain_text;
+    return (
+      // <Tooltip className="tooltip" id="button-tooltip">
+      <div
+        style={{
+          maxWidth: "80vw",
+          backgroundColor: "#343A40",
+          wordWrap: "break-word",
+          padding: "5px",
+          color: "white",
+          borderRadius: "5px",
+        }}
+      >
+        File Text <br />
+        {data}
+      </div>
+      // </Tooltip>
+    );
+  }, []);
 
   return (
     <MainDiv>
@@ -74,19 +100,23 @@ function FilesTable({ rowData, columnData }) {
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : ""}
-                  </span>
-                  <div>{column.canFilter ? column.render("Filter") : null}</div>
-                </th>
-              ))}
+              {headerGroup.headers.map((column) => {
+                return (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
+                    <div>
+                      {column.canFilter ? column.render("Filter") : null}
+                    </div>
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>
@@ -98,25 +128,27 @@ function FilesTable({ rowData, columnData }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td
-                        onClick={() => cell.row.toggleRowExpanded()}
-                        aria-controls="collapse-text"
-                        aria-expanded={row.isExpanded}
-                        {...cell.getCellProps()}
+                      <OverlayTrigger
+                        placement="bottom"
+                        overlay={renderToolkit({ row })}
                       >
-                        {cell.render("Cell")}
-                      </td>
+                        <td
+                          onClick={() => cell.row.toggleRowExpanded()}
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      </OverlayTrigger>
                     );
                   })}
                 </tr>
                 {row.isExpanded ? (
-                  <Collapse in={row.isExpanded}>
-                    <tr>
-                      <td id="collapse-text" colSpan={visibleColumns.length}>
-                        {renderRowSubComponent({ row })}
-                      </td>
-                    </tr>
-                  </Collapse>
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      <b>File Text</b>
+                      {renderRowSubComponents({ row })}
+                    </td>
+                  </tr>
                 ) : null}
               </React.Fragment>
             );
@@ -190,6 +222,9 @@ export default FilesTable;
 
 const MainDiv = styled.span`
   width: 100%;
+  .tooltip {
+    width: 800px;
+  }
   th {
     text-align: left;
     background-color: #343a40;
