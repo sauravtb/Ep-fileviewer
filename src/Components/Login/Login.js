@@ -14,24 +14,33 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [invalidUserError, setInvalidUserError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [passwordType, setPasswordType] = useState("password");
-  const [disable] = useState(false);
   const inputFocus = useRef();
   const [loader, setLoader] = useState(false);
   let history = useHistory();
 
-  function ValidateEmail() {
+  const ValidateEmail = () => {
     const emailErrorMessage = "Invalid E-mail address";
     const mailformat =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (email.match(mailformat)) {
       setEmailError("");
-      Login();
+    } else if (!email && !password) {
+      setEmailError("*required");
+    } else if (!email) {
+      setEmailError("*required");
     } else setEmailError(emailErrorMessage);
-  }
+  };
+
+  const ValidatePassword = () => {
+    if (!password) {
+      setPasswordError("*required");
+      setInvalidUserError("");
+    }
+  };
   const Login = async () => {
     setLoader(true);
     const data = await UserLogin(email, password);
@@ -44,12 +53,19 @@ function Login() {
       history.push("/inbound");
     } else {
       setLoader(false);
-      setInvalidUserError("Invalid Credentials");
+      if (!password) {
+        setInvalidUserError("");
+      } else {
+        setInvalidUserError("Invalid Credentials");
+        setPasswordError("");
+      }
     }
   };
 
   const handleSubmit = () => {
     ValidateEmail();
+    ValidatePassword();
+    if (email && password) Login();
   };
 
   const handleKeypress = (e) => {
@@ -74,13 +90,14 @@ function Login() {
             <Form.Group controlId="formBasicEmail">
               <Form.Control
                 type="email"
+                required
                 placeholder="E-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 ref={inputFocus}
                 onKeyPress={handleKeypress}
               ></Form.Control>
-              <Form.Text className="text-danger text-center">
+              <Form.Text className="text-danger text-left">
                 {emailError}
               </Form.Text>
             </Form.Group>
@@ -93,6 +110,7 @@ function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={handleKeypress}
+                  required
                 />
 
                 {showPassword ? (
@@ -101,6 +119,9 @@ function Login() {
                   <HidePasswordIcon onClick={handlePassword} />
                 )}
               </div>
+              <Form.Text className="text-danger text-left">
+                {passwordError}
+              </Form.Text>
               <Form.Text className="text-danger text-center">
                 {invalidUserError}
               </Form.Text>
@@ -114,7 +135,7 @@ function Login() {
               className="btns"
               block
               onClick={handleSubmit}
-              disabled={!email || !password || disable}
+              // disabled={!email || !password || disable}
             >
               LOGIN
             </Button>
