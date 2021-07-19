@@ -1,10 +1,19 @@
 import React, { useMemo } from "react";
-import { useTable, usePagination, useFilters, useExpanded } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useFilters,
+  useExpanded,
+  useSortBy,
+  useGlobalFilter,
+} from "react-table";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import Collapse from "react-bootstrap/Collapse";
+import { GlobalFilter } from "./GlobalFilter";
 
 function FilesTable({ rowData, columnData }) {
   const columns = useMemo(() => columnData && columnData, [columnData]);
@@ -25,15 +34,24 @@ function FilesTable({ rowData, columnData }) {
     canPreviousPage,
     pageOptions,
     state,
+    setGlobalFilter,
     headerGroups,
     setPageSize,
     gotoPage,
     pageCount,
     visibleColumns,
     prepareRow,
-  } = useTable({ columns, data }, useExpanded, useFilters, usePagination);
+  } = useTable(
+    { columns, data },
 
-  const { pageIndex, pageSize } = state;
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    useExpanded,
+    usePagination
+  );
+
+  const { pageIndex, pageSize, globalFilter } = state;
 
   const renderRowSubComponent = React.useCallback(
     ({ row }) => (
@@ -51,14 +69,21 @@ function FilesTable({ rowData, columnData }) {
 
   return (
     <MainDiv>
+      {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />*/}
       <Table bordered hover responsive {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
-
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
                   <div>{column.canFilter ? column.render("Filter") : null}</div>
                 </th>
               ))}
@@ -73,16 +98,25 @@ function FilesTable({ rowData, columnData }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td
+                        onClick={() => cell.row.toggleRowExpanded()}
+                        aria-controls="collapse-text"
+                        aria-expanded={row.isExpanded}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render("Cell")}
+                      </td>
                     );
                   })}
                 </tr>
                 {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      {renderRowSubComponent({ row })}
-                    </td>
-                  </tr>
+                  <Collapse in={row.isExpanded}>
+                    <tr>
+                      <td id="collapse-text" colSpan={visibleColumns.length}>
+                        {renderRowSubComponent({ row })}
+                      </td>
+                    </tr>
+                  </Collapse>
                 ) : null}
               </React.Fragment>
             );
