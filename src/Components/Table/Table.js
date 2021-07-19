@@ -111,9 +111,9 @@ function FilesTable({ rowData, columnData }) {
                         ) : (
                           <TiArrowSortedUp />
                         )
-                      ) : (
+                      ) : column.canSort ? (
                         <TiArrowUnsorted />
-                      )}
+                      ) : null}
                     </span>
                     <div>
                       {column.canFilter ? column.render("Filter") : null}
@@ -238,7 +238,6 @@ const MainDiv = styled.span`
   tr:nth-child(even) {
     background-color: #dee4e9;
   }
-
   .pageInfo {
     display: flex;
     width: 100%;

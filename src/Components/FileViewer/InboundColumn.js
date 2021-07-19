@@ -11,6 +11,7 @@ export const Columns = [
         {row.isExpanded ? <FiArrowDown /> : <FiArrowRight />}
       </span>
     ),
+    disableSortBy: true,
   },
   {
     Header: "Received From",
