@@ -7,12 +7,16 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Spinner from "react-bootstrap/Spinner";
 import { UserLogin } from "../Services/authService";
+import { AiFillEye } from "react-icons/ai";
+import { AiFillEyeInvisible } from "react-icons/ai";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [invalidUserError, setInvalidUserError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordType, setPasswordType] = useState("password");
   const [disable] = useState(false);
   const inputFocus = useRef();
   const [loader, setLoader] = useState(false);
@@ -53,6 +57,9 @@ function Login() {
       handleSubmit();
     }
   };
+  const handlePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     inputFocus.current.focus();
@@ -77,14 +84,23 @@ function Login() {
                 {emailError}
               </Form.Text>
             </Form.Group>
+
             <Form.Group controlId="formBasicPassword">
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyPress={handleKeypress}
-              />
+              <div className="passwordIcon">
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onKeyPress={handleKeypress}
+                />
+
+                {showPassword ? (
+                  <ShowPasswordIcon onClick={handlePassword} />
+                ) : (
+                  <HidePasswordIcon onClick={handlePassword} />
+                )}
+              </div>
               <Form.Text className="text-danger text-center">
                 {invalidUserError}
               </Form.Text>
@@ -116,6 +132,12 @@ const ParentDiv = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  .passwordIcon {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
   .jumbo {
     display: flex;
     flex-direction: column;
@@ -124,4 +146,15 @@ const ParentDiv = styled.div`
   .spinner {
     font-size: 1rem;
   }
+`;
+
+const ShowPasswordIcon = styled(AiFillEye)`
+  cursor: pointer;
+  position: absolute;
+  right: 6px;
+`;
+const HidePasswordIcon = styled(AiFillEyeInvisible)`
+  cursor: pointer;
+  position: absolute;
+  right: 6px;
 `;
