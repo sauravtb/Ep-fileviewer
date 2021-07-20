@@ -7,7 +7,7 @@ import {
   useSortBy,
   useGlobalFilter,
 } from "react-table";
-import styled from "styled-components";
+import { MainDiv } from "./TableStyles";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -49,7 +49,6 @@ function FilesTable({ rowData, columnData }) {
     prepareRow,
   } = useTable(
     { columns, data },
-
     useFilters,
     useGlobalFilter,
     useSortBy,
@@ -96,13 +95,16 @@ function FilesTable({ rowData, columnData }) {
   return (
     <MainDiv>
       {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />*/}
-      <Table bordered hover responsive {...getTableProps()}>
-        <thead>
+      <Table className="table" bordered hover {...getTableProps()}>
+        <thead style={{ position: "sticky", top: "0px" }}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => {
                 return (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th
+                    className="header"
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                  >
                     {column.render("Header")}
                     <span className="sorting">
                       {column.isSorted ? (
@@ -132,17 +134,17 @@ function FilesTable({ rowData, columnData }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <OverlayTrigger
-                        placement="bottom"
-                        overlay={renderToolkit({ row })}
+                      // <OverlayTrigger
+                      //   placement="bottom"
+                      //   overlay={renderToolkit({ row })}
+                      // >
+                      <td
+                        onClick={() => cell.row.toggleRowExpanded()}
+                        {...cell.getCellProps()}
                       >
-                        <td
-                          onClick={() => cell.row.toggleRowExpanded()}
-                          {...cell.getCellProps()}
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      </OverlayTrigger>
+                        {cell.render("Cell")}
+                      </td>
+                      // </OverlayTrigger>
                     );
                   })}
                 </tr>
@@ -159,7 +161,7 @@ function FilesTable({ rowData, columnData }) {
           })}
         </tbody>
       </Table>
-      <div className="pagination">
+      {/*<div className="pagination">
         <span>
           Page{" "}
           <strong>
@@ -217,48 +219,9 @@ function FilesTable({ rowData, columnData }) {
             </Dropdown.Item>
           ))}
         </DropdownButton>
-      </div>
+            </div>*/}
     </MainDiv>
   );
 }
 
 export default FilesTable;
-
-const MainDiv = styled.span`
-  width: 100%;
-  th {
-    text-align: left;
-    background-color: #343a40;
-    color: white;
-  }
-  tr {
-    background-color: #f7f6fb;
-    cursor: pointer;
-  }
-  tr:nth-child(even) {
-    background-color: #dee4e9;
-  }
-  .pageInfo {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-  .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    float: right;
-    color: #3e444a;
-
-    & button {
-      border-radius: 3px;
-      margin-right: 0.3rem;
-    }
-    & span {
-      margin-right: 0.3rem;
-    }
-    & input {
-      border-radius: 3px;
-    }
-  }
-`;

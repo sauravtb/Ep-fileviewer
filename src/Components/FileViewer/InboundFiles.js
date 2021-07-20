@@ -46,6 +46,7 @@ function InboundFiles() {
               Recieved by {usName}
               <UpIcon spin={spin}></UpIcon>
             </WrapDiv>
+
             <FilesTable
               rowData={rowData && rowData}
               columnData={Columns}
@@ -63,9 +64,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  padding-bottom: 0;
   align-items: center;
   justify-content: center;
   background-color: #f6f8fc;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const WrapDiv = styled.div`
   display: flex;
@@ -74,6 +79,7 @@ const WrapDiv = styled.div`
   align-items: center;
   margin-left: 1.5rem;
   margin-bottom: 1rem;
+  z-index: 1;
 `;
 
 const UpIcon = styled(FaArrowDown)`
