@@ -8,6 +8,7 @@ import { fetchFiles } from "../Services/filesService";
 import Spinner from "react-bootstrap/Spinner";
 import { Columns } from "./InboundColumn";
 import { Logout } from "../../Utils/Logout";
+import NoData from "../NoData/NoData.js";
 
 function InboundFiles() {
   const history = useHistory();
@@ -20,7 +21,6 @@ function InboundFiles() {
     const fileUrl = "inboundfiles";
     const data = await fetchFiles(fileUrl);
     if (data && data === 401) {
-      console.log("data 401");
       Logout(history);
     } else {
       setRowData(data && data.data);
@@ -34,12 +34,15 @@ function InboundFiles() {
   }, [fetchInboundFiles]);
 
   const usName = rowData && rowData[0]?.us_name.replace(/_/g, " ");
+
   return (
     <React.Fragment>
       <Navbar />
       <Wrapper>
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
+        ) : rowData && rowData.length === 0 ? (
+          <NoData />
         ) : (
           <React.Fragment>
             <WrapDiv>

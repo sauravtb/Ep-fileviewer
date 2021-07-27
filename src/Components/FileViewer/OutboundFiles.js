@@ -8,6 +8,7 @@ import { fetchFiles } from "../Services/filesService";
 import Spinner from "react-bootstrap/Spinner";
 import { Columns } from "./OutboundColumn";
 import { Logout } from "../../Utils/Logout";
+import NoData from "../NoData/NoData.js";
 
 function OutboundFiles() {
   const history = useHistory();
@@ -40,6 +41,8 @@ function OutboundFiles() {
       <Wrapper>
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
+        ) : rowData && rowData.length === 0 ? (
+          <NoData />
         ) : (
           <React.Fragment>
             <WrapDiv>
