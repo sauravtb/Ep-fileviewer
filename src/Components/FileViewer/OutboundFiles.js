@@ -75,7 +75,7 @@ const WrapDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 `;
 
 const DownIcon = styled(FaArrowDown)`

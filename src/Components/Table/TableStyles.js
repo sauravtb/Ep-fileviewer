@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MainDiv = styled.span`
   width: 100%;
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: scroll;
   overflow-x: none;
 

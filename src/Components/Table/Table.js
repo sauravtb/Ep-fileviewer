@@ -49,8 +49,8 @@ function FilesTable({ rowData, columnData }) {
     prepareRow,
   } = useTable(
     { columns, data },
-    useFilters,
     useGlobalFilter,
+    useFilters,
     useSortBy,
     useExpanded,
     usePagination
@@ -93,75 +93,76 @@ function FilesTable({ rowData, columnData }) {
   }, []);
 
   return (
-    <MainDiv>
-      {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />*/}
-      <Table className="table" bordered hover {...getTableProps()}>
-        <thead style={{ position: "sticky", top: "0px" }}>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => {
-                return (
-                  <th
-                    className="header"
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                  >
-                    {column.render("Header")}
-                    <span className="sorting">
-                      {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <TiArrowSortedDown />
-                        ) : (
-                          <TiArrowSortedUp />
-                        )
-                      ) : column.canSort ? (
-                        <TiArrowUnsorted />
-                      ) : null}
-                    </span>
-                    <div>
-                      {column.canFilter ? column.render("Filter") : null}
-                    </div>
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <React.Fragment>
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      // <OverlayTrigger
-                      //   placement="bottom"
-                      //   overlay={renderToolkit({ row })}
-                      // >
-                      <td
-                        onClick={() => cell.row.toggleRowExpanded()}
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                      // </OverlayTrigger>
-                    );
-                  })}
-                </tr>
-                {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      <b>File Text</b>
-                      {renderRowSubComponents({ row })}
-                    </td>
+    <React.Fragment>
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <MainDiv>
+        <Table className="table" bordered hover {...getTableProps()}>
+          <thead style={{ position: "sticky", top: "0px" }}>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => {
+                  return (
+                    <th
+                      className="header"
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render("Header")}
+                      <span className="sorting">
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <TiArrowSortedDown />
+                          ) : (
+                            <TiArrowSortedUp />
+                          )
+                        ) : column.canSort ? (
+                          <TiArrowUnsorted />
+                        ) : null}
+                      </span>
+                      <div>
+                        {column.canFilter ? column.render("Filter") : null}
+                      </div>
+                    </th>
+                  );
+                })}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <React.Fragment>
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        // <OverlayTrigger
+                        //   placement="bottom"
+                        //   overlay={renderToolkit({ row })}
+                        // >
+                        <td
+                          onClick={() => cell.row.toggleRowExpanded()}
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                        // </OverlayTrigger>
+                      );
+                    })}
                   </tr>
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-        </tbody>
-      </Table>
-      {/*<div className="pagination">
+                  {row.isExpanded ? (
+                    <tr>
+                      <td colSpan={visibleColumns.length}>
+                        <b>File Text</b>
+                        {renderRowSubComponents({ row })}
+                      </td>
+                    </tr>
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
+          </tbody>
+        </Table>
+        {/*<div className="pagination">
         <span>
           Page{" "}
           <strong>
@@ -220,7 +221,8 @@ function FilesTable({ rowData, columnData }) {
           ))}
         </DropdownButton>
             </div>*/}
-    </MainDiv>
+      </MainDiv>
+    </React.Fragment>
   );
 }
 
