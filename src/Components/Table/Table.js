@@ -7,12 +7,14 @@ import {
   useSortBy,
   useGlobalFilter,
 } from "react-table";
-import { MainDiv } from "./TableStyles";
+import { MainDiv, PaginationDiv } from "./TableStyles";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { GlobalFilter } from "./GlobalFilter";
+import Pagination from "react-bootstrap/Pagination";
+import PageItem from "react-bootstrap/PageItem";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {
@@ -162,66 +164,38 @@ function FilesTable({ rowData, columnData }) {
             })}
           </tbody>
         </Table>
-        {/*<div className="pagination">
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        <span>
-          | Go to page:{" "}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: "100px" }}
-          />
-        </span>{" "}
-        <Button
-          variant="primary"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-          size="sm"
-        >
-          {"<<"}
-        </Button>{" "}
-        <Button
-          size="sm"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >
-          {"<"}
-        </Button>{" "}
-        <Button size="sm" onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </Button>{" "}
-        <Button
-          size="sm"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
-        >
-          {">>"}
-        </Button>{" "}
-        <DropdownButton title={`Show ${pageSize}`} value={pageSize} size="sm">
-          {[5, 10, 20, 30, 40].map((pageSize) => (
-            <Dropdown.Item
-              as="button"
-              key={pageSize}
-              value={pageSize}
-              onClick={(e) => {
-                setPageSize(Number(e.target.value));
-              }}
-            >
-              Show {pageSize}
-            </Dropdown.Item>
-          ))}
-        </DropdownButton>
-            </div>*/}
       </MainDiv>
+
+      <PaginationDiv>
+        <Pagination>
+          <Pagination.First
+            disabled={!canPreviousPage}
+            onClick={() => gotoPage(0)}
+          />
+          <Pagination.Prev
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+          />
+          {pageOptions.map((page, i) => {
+            return (
+              <Pagination.Item
+                key={i}
+                active={pageIndex === i}
+                onClick={() => gotoPage(--page)}
+              >
+                {++page}
+              </Pagination.Item>
+            );
+          })}
+          <Pagination.Next disabled={!canNextPage} onClick={() => nextPage()} />
+          <Pagination.Last
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          />
+        </Pagination>
+      </PaginationDiv>
+
+      {Object.keys(rowData).length === 0 ? "No Records Found " : null}
     </React.Fragment>
   );
 }

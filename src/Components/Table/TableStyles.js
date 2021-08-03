@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MainDiv = styled.span`
   width: 100%;
-  max-height: 75vh;
+  max-height: 70vh;
   overflow-y: scroll;
   overflow-x: none;
 
@@ -43,21 +43,9 @@ export const PageInfo = styled.div`
   justify-content: center;
 `;
 
-export const Pagination = styled.div`
+export const PaginationDiv = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-  color: #3e444a;
-
-  & button {
-    border-radius: 3px;
-    margin-right: 0.3rem;
-  }
-  & span {
-    margin-right: 0.3rem;
-  }
-  & input {
-    border-radius: 3px;
-  }
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: flex-end;
 `;

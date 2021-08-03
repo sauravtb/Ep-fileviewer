@@ -8,7 +8,6 @@ import { fetchFiles } from "../Services/filesService";
 import Spinner from "react-bootstrap/Spinner";
 import { Columns } from "./InboundColumn";
 import { Logout } from "../../Utils/Logout";
-import NoData from "../NoData/NoData.js";
 
 function InboundFiles() {
   const history = useHistory();
@@ -41,13 +40,15 @@ function InboundFiles() {
       <Wrapper>
         {loader ? (
           <Spinner className="spinner" animation="border" variant="dark" />
-        ) : rowData && rowData.length === 0 ? (
-          <NoData />
         ) : (
           <React.Fragment>
             <WrapDiv>
-              Recieved by {usName}
-              <UpIcon spin={spin}></UpIcon>
+              {rowData && rowData.length !== 0 ? (
+                <React.Fragment>
+                  Recieved by {usName}
+                  <UpIcon spin={spin}></UpIcon>
+                </React.Fragment>
+              ) : null}
             </WrapDiv>
 
             <FilesTable
